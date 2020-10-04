@@ -21,6 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="abfa5004-fa7f-4544-9474-c9f9cbf9c97e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/themes/even/assets/sass/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/themes/even/assets/sass/_variables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/themes/even/layouts/partials/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/themes/even/layouts/partials/footer.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,9 +98,9 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="458" y="215" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1440.155.1024.745/0.23.1440.877@0.23.1440.877" timestamp="1601793921201" />
-    <state x="421" y="216" width="708" height="490" key="find.popup" timestamp="1601815910277">
+    <state x="421" y="216" width="708" height="490" key="find.popup" timestamp="1601816460181">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="421" y="216" width="708" height="490" key="find.popup/1440.155.1024.745/0.23.1440.877@0.23.1440.877" timestamp="1601815910277" />
+    <state x="421" y="216" width="708" height="490" key="find.popup/1440.155.1024.745/0.23.1440.877@0.23.1440.877" timestamp="1601816460181" />
   </component>
 </project>

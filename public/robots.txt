@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: http://www.binfromfd.cn/sitemap.xml
+Sitemap: https://holdengong.com/sitemap.xml
