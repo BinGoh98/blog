@@ -49,7 +49,7 @@
 <meta itemprop="description" content="Hugo搭建静态博客与服务器部署">
 <meta itemprop="datePublished" content="2020-10-05T13:04:16+08:00" />
 <meta itemprop="dateModified" content="2020-10-05T13:04:16+08:00" />
-<meta itemprop="wordCount" content="1653">
+<meta itemprop="wordCount" content="1652">
 
 
 
@@ -140,18 +140,21 @@
         <li><a href="#hugo简介">Hugo简介</a></li>
         <li><a href="#hugo安装">Hugo安装</a>
           <ul>
-            <li></li>
+            <li><a href="#1-二进制安装">1. 二进制安装</a></li>
+            <li><a href="#2-源码安装">2. 源码安装</a></li>
           </ul>
         </li>
         <li><a href="#hugo快速开始">Hugo快速开始</a>
           <ul>
-            <li></li>
-            <li><a href="#运行hugo">运行hugo</a></li>
+            <li><a href="#生成站点">生成站点</a></li>
+            <li><a href="#下载主题">下载主题</a></li>
+            <li><a href="#新建page">新建PAGE</a></li>
           </ul>
         </li>
+        <li><a href="#运行hugo">运行hugo</a></li>
         <li><a href="#部署hugo">部署hugo</a>
           <ul>
-            <li></li>
+            <li><a href="#自动发布">自动发布</a></li>
           </ul>
         </li>
       </ul>
@@ -161,12 +164,11 @@
   </div>
 </div>
     <div class="post-content">
-      <p>疫情期间，比较清闲，所以抽时间自学了一些计算机的知识。后来运气非常好地进入了某大厂实习，也运气非常好地实习转正了。
-考虑到个人发展与家庭的因素，最后决定放弃保研，提早成为一名社畜。不过之前准备实习面试，是直接背面经的，没啥实操经验，知道自己底子特别薄弱。所以趁着实习结束，还未正式入职的这段时间，好好补一补计算机基础。并将我学习到的一些东西记录在这里，希望可以养成及时记录的好习惯，以后无事也可翻看翻看。</p>
+      <p>疫情期间，比较清闲，所以抽时间自学了一些计算机的知识。后来运气非常好地进入了某大厂实习，也运气非常好地实习转正了。考虑到个人发展与家庭的因素，最后决定放弃保研，提早成为一名社畜。不过之前准备实习面试，是直接背面经的，没啥实操经验，知道自己底子特别薄弱。所以趁着实习结束，还未正式入职的这段时间，好好补一补计算机基础。并将我学习到的一些东西记录在这里，希望可以养成及时记录的好习惯，以后无事也可翻看翻看。</p>
 <h2 id="hugo简介">Hugo简介</h2>
 <p>Hugo是由Go语言实现的静态网站生成器，据称是「The world&rsquo;s fastest framework for building websites」。静态网页，可以理解为是由一系列<code>html</code>文件和<code>css</code>,<code>js</code>等静态文件构成的。<code>Hugo</code>负责把我们写的<code>markdown</code>转换成<code>html</code>的形式，我们直接拿着它生成的文件就可以直接发布了。</p>
 <h2 id="hugo安装">Hugo安装</h2>
-<h4 id="1-二进制安装">1. 二进制安装</h4>
+<h3 id="1-二进制安装">1. 二进制安装</h3>
 <p>这里强推<code>homebrew</code>！Mac直接可以用以下命令安装：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -177,7 +179,7 @@
 </code></pre></td></tr></table>
 </div>
 </div><p>每次使用brew的时候都会自动更新，需要等待很长时间，可以配置环境变量关闭自动更新。</p>
-<h5 id="临时关闭">临时关闭</h5>
+<h4 id="临时关闭">临时关闭</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -186,7 +188,7 @@
 <pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> <span class="nv">HOMEBREW_NO_AUTO_UPDATE</span><span class="o">=</span><span class="nb">true</span> <span class="c1"># shell 关闭之后就不生效了</span>
 </code></pre></td></tr></table>
 </div>
-</div><h5 id="永久关闭">永久关闭</h5>
+</div><h4 id="永久关闭">永久关闭</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -217,7 +219,7 @@ vi ~/.zshrc
 <span class="nb">source</span> ~/.zshrc
 </code></pre></td></tr></table>
 </div>
-</div><h4 id="2-源码安装">2. 源码安装</h4>
+</div><h3 id="2-源码安装">2. 源码安装</h3>
 <p>安装之前需要已经装好<code>Git</code> 和 <code>Go</code></p>
 <ul>
 <li><a href="https://git-scm.com">Git官网</a></li>
@@ -241,7 +243,7 @@ go install
 </div>
 </div><h2 id="hugo快速开始">Hugo快速开始</h2>
 <p>输入 <code>hugo version</code>，如果显示出版本号，就说明你的<code>hugo</code>已经安装好了！Just enjoy it!</p>
-<h4 id="生成站点">生成站点</h4>
+<h3 id="生成站点">生成站点</h3>
 <p>期望在当前目录下快速生成站点</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -306,7 +308,7 @@ personal_blog
 └── themes <span class="c1"># 下载的主题</span>
 </code></pre></td></tr></table>
 </div>
-</div><h4 id="下载主题">下载主题</h4>
+</div><h3 id="下载主题">下载主题</h3>
 <p><a href="https://themes.gohugo.io/">Hugo Themes</a></p>
 <p>在这里下载你喜欢的主题吧！</p>
 <p>主题有自己的下载说明，以我下载的<code>even</code>主题为例。</p>
@@ -324,7 +326,7 @@ git clone https://github.com/olOwOlo/hugo-theme-even themes/even
 <blockquote>
 <p>比如 even 要求将 themes/even/exampleSite/config.toml 文件复制到站点目录下！</p>
 </blockquote>
-<h4 id="新建page">新建PAGE</h4>
+<h3 id="新建page">新建PAGE</h3>
 <p>在<code>personal_blog</code>文件夹下</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -377,7 +379,7 @@ draft: <span class="nb">true</span>
 <p><code>date</code>是文章创建的日期</p>
 <p><code>draft</code>表示是否是草稿</p>
 <p>更多的参数，可以到<code>themes/even/archetypes/default.md</code>中查看并设置！</p>
-<h3 id="运行hugo">运行hugo</h3>
+<h2 id="运行hugo">运行hugo</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -399,13 +401,12 @@ Web Server is available at http://localhost:1313/ <span class="o">(</span><span 
 </code></pre></td></tr></table>
 </div>
 </div><p>浏览器打开 <code>http://localhost:1313/</code>，就可以看到新的站点啦！</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gjed4rt5clj31900u0gs8.jpg" alt="截屏2020-10-05 下午12.41.48" style="zoom:50%;" /></p>
 <h2 id="部署hugo">部署hugo</h2>
 <p>我之前自己买了腾讯云的服务器和域名，并且关联好了域名和服务器，所以就直接部署在自己的服务器上了。如果没有服务器的话，直接部署在<code>github</code>上也是完全ok的！</p>
 <p>我使用<code>宝塔面板</code>来运维！真的是超级方便，一键部署，适合小白。<a href="https://www.bt.cn">宝塔面板</a></p>
 <p>按照指示在自己的服务器上部署好了之后，就可以直接用了！</p>
 <p><code>网站</code> &ndash;&gt;  <code>添加站点</code></p>
-<p><a href="https://tva1.sinaimg.cn/large/007S8ZIlgy1gjed4rt5clj31900u0gs8.jpg">https://tva1.sinaimg.cn/large/007S8ZIlgy1gjed4rt5clj31900u0gs8.jpg</a></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gjed4rt5clj31900u0gs8.jpg" style="zoom:50%;" /></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -415,7 +416,7 @@ Web Server is available at http://localhost:1313/ <span class="o">(</span><span 
 </code></pre></td></tr></table>
 </div>
 </div><p>将生成的<code>public</code>文件夹，复制到网站的根目录下，访问你的网站！就可以看到啦！</p>
-<h4 id="自动发布">自动发布</h4>
+<h3 id="自动发布">自动发布</h3>
 <p>将自己的代码放到<code>github</code>仓库中，然后在服务器上开一个定时任务去拉取代码。</p>
 <p>宝塔：<code>计划任务</code> &ndash;&gt; <code>添加计划任务</code></p>
 <p>添加一个<code>shell</code>脚本</p>
@@ -497,7 +498,7 @@ cp -rf ~/blog/public/. /www/wwwroot/www.binfromfd.cn/
   </span>
     <span class="division">|</span>
     <span class="theme-info">
-         <a class="theme-link" href="http://www.beian.gov.cn">沪ICP备20004025号</a>
+         <a class="theme-link" href="http://www.beian.gov.cn">沪ICP备20004025-1号</a>
     </span>
 
     
