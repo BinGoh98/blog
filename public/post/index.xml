@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on 牧羊少年的田野</title>
-    <link>https://holdengong.com/post/</link>
+    <link>http://www.binfromfd.cn/post/</link>
     <description>Recent content in Posts on 牧羊少年的田野</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 04 Oct 2020 13:01:27 +0800</lastBuildDate><atom:link href="https://holdengong.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 05 Oct 2020 13:04:16 +0800</lastBuildDate><atom:link href="http://www.binfromfd.cn/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>leetcode 331</title>
-      <link>https://holdengong.com/post/first/</link>
-      <pubDate>Sun, 04 Oct 2020 13:01:27 +0800</pubDate>
+      <title>Hugo搭建静态博客与服务器部署</title>
+      <link>http://www.binfromfd.cn/post/blog_hugo/</link>
+      <pubDate>Mon, 05 Oct 2020 13:04:16 +0800</pubDate>
       
-      <guid>https://holdengong.com/post/first/</guid>
-      <description>&lt;p&gt;331&lt;/p&gt;</description>
+      <guid>http://www.binfromfd.cn/post/blog_hugo/</guid>
+      <description>疫情期间，比较清闲，所以抽时间自学了一些计算机的知识。后来运气非常好地进入了某大厂实习，也运气非常好地实习转正了。 考虑到个人发展与家庭的因素</description>
     </item>
     
   </channel>

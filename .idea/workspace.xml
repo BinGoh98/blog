@@ -32,6 +32,11 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/themes/even" />
   </component>
+  <component name="ProblemsViewState">
+    <hideBySeverity>
+      <option value="300" />
+    </hideBySeverity>
+  </component>
   <component name="ProjectId" id="1iOndIKGFrwFAZpbp588cuw5DUh" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -94,13 +99,17 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="433" y="292" key="#Notifications" timestamp="1601821799362">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="433" y="292" key="#Notifications/1440.155.1024.745/0.23.1440.877@0.23.1440.877" timestamp="1601821799362" />
     <state x="458" y="215" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1601793921201">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="458" y="215" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1440.155.1024.745/0.23.1440.877@0.23.1440.877" timestamp="1601793921201" />
-    <state x="421" y="216" width="708" height="490" key="find.popup" timestamp="1601816460181">
+    <state x="421" y="216" width="708" height="490" key="find.popup" timestamp="1601874739192">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="421" y="216" width="708" height="490" key="find.popup/1440.155.1024.745/0.23.1440.877@0.23.1440.877" timestamp="1601816460181" />
+    <state x="421" y="216" width="708" height="490" key="find.popup/1440.155.1024.745/0.23.1440.877@0.23.1440.877" timestamp="1601874739192" />
   </component>
 </project>
