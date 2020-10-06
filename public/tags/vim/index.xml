@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>vim on 「彬Goh」的个人博客</title>
+    <link>http://www.binfromfd.cn/tags/vim/</link>
+    <description>Recent content in vim on 「彬Goh」的个人博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 06 Oct 2020 22:28:54 +0800</lastBuildDate><atom:link href="http://www.binfromfd.cn/tags/vim/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>vim配置入门</title>
+      <link>http://www.binfromfd.cn/post/blog_vim/</link>
+      <pubDate>Tue, 06 Oct 2020 22:28:54 +0800</pubDate>
+      
+      <guid>http://www.binfromfd.cn/post/blog_vim/</guid>
+      <description>在终端操作vim是常有的事情。vim也以它弹性的配置而受到非常多的人的欢迎。尤其对于某些大神来说，直接就用vim作生产力工具了。如何让我们的</description>
+    </item>
+    
+  </channel>
+</rss>

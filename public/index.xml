@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>牧羊少年的田野</title>
+    <title>「彬Goh」的个人博客</title>
     <link>http://www.binfromfd.cn/</link>
-    <description>Recent content on 牧羊少年的田野</description>
+    <description>Recent content on 「彬Goh」的个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 05 Oct 2020 13:04:16 +0800</lastBuildDate><atom:link href="http://www.binfromfd.cn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 06 Oct 2020 22:28:54 +0800</lastBuildDate><atom:link href="http://www.binfromfd.cn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>vim配置入门</title>
+      <link>http://www.binfromfd.cn/post/blog_vim/</link>
+      <pubDate>Tue, 06 Oct 2020 22:28:54 +0800</pubDate>
+      
+      <guid>http://www.binfromfd.cn/post/blog_vim/</guid>
+      <description>在终端操作vim是常有的事情。vim也以它弹性的配置而受到非常多的人的欢迎。尤其对于某些大神来说，直接就用vim作生产力工具了。如何让我们的</description>
+    </item>
+    
     <item>
       <title>Hugo搭建静态博客与服务器部署</title>
       <link>http://www.binfromfd.cn/post/blog_hugo/</link>

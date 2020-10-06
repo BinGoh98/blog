@@ -20,6 +20,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="abfa5004-fa7f-4544-9474-c9f9cbf9c97e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/content/post/blog_linux_command.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/content/post/blog_nginx_1.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/content/post/blog_vim.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.toml" beforeDir="false" afterPath="$PROJECT_DIR$/config.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/post/blog_hugo.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/post/blog_hugo.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/themes/even/assets/sass/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/themes/even/assets/sass/_variables.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/themes/even/layouts/partials/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/themes/even/layouts/partials/footer.html" afterDir="false" />
     </list>
@@ -30,7 +37,7 @@
   </component>
   <component name="GOROOT" path="/usr/local/go" />
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/themes/even" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProblemsViewState">
     <hideBySeverity>
@@ -38,12 +45,15 @@
     </hideBySeverity>
   </component>
   <component name="ProjectId" id="1iOndIKGFrwFAZpbp588cuw5DUh" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
@@ -97,6 +107,9 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="433" y="292" key="#Notifications" timestamp="1601821799362">
