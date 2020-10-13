@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>go on 「彬Goh」的个人博客</title>
+    <link>http://www.binfromfd.cn/tags/go/</link>
+    <description>Recent content in go on 「彬Goh」的个人博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 13 Oct 2020 16:56:36 +0800</lastBuildDate><atom:link href="http://www.binfromfd.cn/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>「算法」经典排序算法的Go实现</title>
+      <link>http://www.binfromfd.cn/post/algorithm_sort/</link>
+      <pubDate>Tue, 13 Oct 2020 16:56:36 +0800</pubDate>
+      
+      <guid>http://www.binfromfd.cn/post/algorithm_sort/</guid>
+      <description>&lt;p&gt;在学习算法的过程中，会把写的代码放到下面的仓库中做记录，以下仓库都是&lt;code&gt;go&lt;/code&gt;语言版本的。&lt;br&gt;
+&lt;a href=&#34;https://github.com/BinGoh98/Algorithm.git&#34;&gt;链接：仓库地址&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

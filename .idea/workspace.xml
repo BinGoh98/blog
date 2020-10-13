@@ -20,9 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="abfa5004-fa7f-4544-9474-c9f9cbf9c97e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/content/post/algorithm_sort.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.toml" beforeDir="false" afterPath="$PROJECT_DIR$/config.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/post/algorithm_sort.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/post/algorithm_sort.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/themes/even/assets/sass/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/themes/even/assets/sass/_variables.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/themes/even/layouts/partials/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/themes/even/layouts/partials/footer.html" afterDir="false" />
     </list>
@@ -50,7 +48,9 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
