@@ -20,7 +20,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="abfa5004-fa7f-4544-9474-c9f9cbf9c97e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/content/post/blog_unix_io.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.toml" beforeDir="false" afterPath="$PROJECT_DIR$/config.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/_gen/assets/scss/sass/main.scss_48b060fe05b0a273d182ef83c0605941.content" beforeDir="false" afterPath="$PROJECT_DIR$/resources/_gen/assets/scss/sass/main.scss_48b060fe05b0a273d182ef83c0605941.content" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/_gen/assets/scss/sass/main.scss_48b060fe05b0a273d182ef83c0605941.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/_gen/assets/scss/sass/main.scss_48b060fe05b0a273d182ef83c0605941.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/themes/even/assets/sass/_common/_animation.scss" beforeDir="false" afterPath="$PROJECT_DIR$/themes/even/assets/sass/_common/_animation.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/themes/even/assets/sass/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/themes/even/assets/sass/_variables.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/themes/even/exampleSite/config.toml" beforeDir="false" afterPath="$PROJECT_DIR$/themes/even/exampleSite/config.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/themes/even/layouts/partials/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/themes/even/layouts/partials/footer.html" afterDir="false" />
@@ -58,12 +64,15 @@
     <property name="go.sdk.automatically.set" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/static" />
     <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.stylelint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.stylelint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.stylelint" value="" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.textmate.bundles" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -115,22 +124,27 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="433" y="292" key="#Notifications/1440.155.1024.745/0.23.1440.877@0.23.1440.877" timestamp="1601821799362" />
+    <state x="439" y="346" key="#Stylelint" timestamp="1602667886392">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="439" y="346" key="#Stylelint/0.0.1440.900@0.0.1440.900" timestamp="1602667886392" />
     <state x="458" y="215" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1601793921201">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="458" y="215" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1440.155.1024.745/0.23.1440.877@0.23.1440.877" timestamp="1601793921201" />
-    <state x="120" y="123" key="SettingsEditor" timestamp="1602581257981">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state x="120" y="103" key="SettingsEditor" timestamp="1602596857370">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state x="120" y="103" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1602596857370" />
     <state x="120" y="123" key="SettingsEditor/1440.155.1024.745/0.23.1440.877@0.23.1440.877" timestamp="1602581257981" />
     <state width="701" height="445" key="SwitcherDM" timestamp="1602581264934">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="701" height="445" key="SwitcherDM/1440.155.1024.745/0.23.1440.877@0.23.1440.877" timestamp="1602581264934" />
-    <state x="421" y="198" width="712" height="503" key="find.popup" timestamp="1602595939323">
+    <state x="421" y="198" width="712" height="503" key="find.popup" timestamp="1602913377022">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="421" y="198" width="712" height="503" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1602595939323" />
+    <state x="421" y="198" width="712" height="503" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1602913377022" />
     <state x="421" y="216" width="712" height="490" key="find.popup/1440.155.1024.745/0.23.1440.877@0.23.1440.877" timestamp="1602581261186" />
   </component>
 </project>

@@ -36,7 +36,7 @@
     {{- end }}
     {{ if and .Site.Params.busuanzi.enable .Site.Params.busuanzi.siteUV -}}
       {{ $valueSpan := printf `<span id="busuanzi_value_site_uv"><img src="%s" alt="spinner.svg"/></span>` $spinner -}}
-      <span id="busuanzi_container_site_uv"> {{ printf (T "siteUV") $valueSpan | safeHTML }} </span>
+      <span id="busuanzi_container_site_uv"> xxxxx{{ printf (T "siteUV") $valueSpan | safeHTML }} </span>
     {{- end }}
   </div>
   {{- end }}

@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>「csapp」Unix系统级IO - 「彬Goh」的个人博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="彬Goh" /><meta name="description" content="「csapp」Unix系统级IO" /><meta name="keywords" content="csapp, read, write, io" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.75.1 with theme even" />
+
+
+<link rel="canonical" href="http://www.binfromfd.cn/post/blog_unix_io/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f8e630b43e969857a189f7cc4d74b67032c29495708687d56ce9e8605c6bca1d.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="「csapp」Unix系统级IO" />
+<meta property="og:description" content="「csapp」Unix系统级IO" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.binfromfd.cn/post/blog_unix_io/" />
+<meta property="article:published_time" content="2020-10-17T13:19:33+08:00" />
+<meta property="article:modified_time" content="2020-10-17T13:19:33+08:00" />
+<meta itemprop="name" content="「csapp」Unix系统级IO">
+<meta itemprop="description" content="「csapp」Unix系统级IO">
+<meta itemprop="datePublished" content="2020-10-17T13:19:33+08:00" />
+<meta itemprop="dateModified" content="2020-10-17T13:19:33+08:00" />
+<meta itemprop="wordCount" content="3737">
+
+
+
+<meta itemprop="keywords" content="csapp," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="「csapp」Unix系统级IO"/>
+<meta name="twitter:description" content="「csapp」Unix系统级IO"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">「彬Goh」的个人博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">「彬Goh」的个人博客</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">「csapp」Unix系统级IO</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-10-17 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"> 操作系统 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#文件概述">文件概述</a></li>
+        <li><a href="#打开和关闭文件">打开和关闭文件</a>
+          <ul>
+            <li></li>
+          </ul>
+        </li>
+        <li><a href="#读写文件">读写文件</a></li>
+        <li><a href="#带缓冲的读写">带缓冲的读写</a>
+          <ul>
+            <li></li>
+          </ul>
+        </li>
+        <li><a href="#文件元数据">文件元数据</a></li>
+        <li><a href="#目录">目录</a></li>
+        <li><a href="#io重定向">I/O重定向</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>输入/输出（I/O）是指主存与外部设备的数据复制过程。<strong>输入</strong>是指从I/O设备复制数据到主存，例如从磁盘读数据或者获得键盘的输入；<strong>输出</strong>则是从主存将数据复制到I/O设备。</p>
+<h2 id="文件概述">文件概述</h2>
+<p>一个 linux 文件就是一个m个字节的序列。在linux中，一切皆文件。<u>所有的I/O都被当作是对应文件的读和写。</u></p>
+<p>每个linux文件都有一个类型。Linux 内核将所有文件组织称一个目录层次结构，放在根目录「/」下面。</p>
+<table>
+<thead>
+<tr>
+<th>文件类型</th>
+<th>英文名称</th>
+<th>含义</th>
+<th>符号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>普通文件</td>
+<td>regular file</td>
+<td>一般的文件。通常要区分<u>二进制文件</u>和<u>文本文件</u></td>
+<td>-</td>
+</tr>
+<tr>
+<td>目录</td>
+<td>directory</td>
+<td>包含一组链接，每个链接都将一个文件名映射到另一个文件</td>
+<td>d</td>
+</tr>
+<tr>
+<td>套接字</td>
+<td>socket</td>
+<td>与另一个进程进行跨网络通信的文件</td>
+<td>s</td>
+</tr>
+<tr>
+<td>命名通道</td>
+<td>named pipe</td>
+<td>一种先进先出的通信机制</td>
+<td>p</td>
+</tr>
+<tr>
+<td>符号链接</td>
+<td>symbolic link</td>
+<td>一种快捷方式</td>
+<td>l</td>
+</tr>
+<tr>
+<td>字符设备</td>
+<td>character device</td>
+<td>串行端口的接口设备，例如键盘、鼠标等等</td>
+<td>c</td>
+</tr>
+<tr>
+<td>块设备</td>
+<td>block device</td>
+<td>存储数据以供系统存取的接口设备，简单而言就是硬盘</td>
+<td>b</td>
+</tr>
+</tbody>
+</table>
+<p>查看文件类型，<code>drwxr-xr-x</code>的第一个字符<code>d</code>表示这是一个 directory。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">&gt; ls -l
+drwxr-xr-x   <span class="m">3</span> bingoh  staff    <span class="m">96</span> <span class="m">10</span>  <span class="m">5</span> 12:14 BlogContent
+&gt; file BlogContent
+BlogContent: directory
+
+&gt; ls -lhi <span class="c1"># human readable / inode</span>
+<span class="m">1523864</span> drwxr-xr-x   <span class="m">3</span> bingoh  staff    96B <span class="m">10</span>  <span class="m">5</span> 12:14 BlogContent
+<span class="m">392514</span> drwxr-xr-x   <span class="m">4</span> bingoh  staff   128B  <span class="m">9</span> <span class="m">28</span> 15:01 go
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="打开和关闭文件">打开和关闭文件</h2>
+<h4 id="文件描述符">文件描述符</h4>
+<p>应用程序通过要求内核打开相应的文件。之后内核返回一个小的非负整数，叫做<u>文件描述符</u>。对于应用程序来说，只需要记住这个描述符就行了，内核负责记录打开文件的所有信息。</p>
+<p>**每个进程都有自己独立的描述符表。**这就意味着，当两个进程都尝试打开文件时，它们的文件描述符都是从<code>3</code>开始增长的。当文件读写结束时候，应用通知内核关闭这个文件，内核就会释放文件打开时创建的数据结构，并将这个文件描述符恢复到可用的描述符池中，下次可以再使用。</p>
+<p>Linux shell创建的每个进程，开始时都有三个打开的文件：标准输入（fd = 0），标准输出（fd = 1），标准错误（fd = 2）。</p>
+<p>在<code>&lt;unistd.h&gt;</code>中定义了常量来代替显式的描述符值。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#define	 STDIN_FILENO	0	</span><span class="cm">/* standard input file descriptor */</span><span class="cp">
+</span><span class="cp">#define	STDOUT_FILENO	1	</span><span class="cm">/* standard output file descriptor */</span><span class="cp">
+</span><span class="cp">#define	STDERR_FILENO	2	</span><span class="cm">/* standard error file descriptor */</span><span class="cp">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>进程各自维护的描述符表中的每个文件描述符，指向<u>打开文件表</u>，这个是所有进程共享的。文件表的每一项包括打开文件的文件位置、引用计数和指向<code>v-node表</code>的指针。引用计数指的是指向当前文件的饮用的数目。内核不会删除这个文件表表项，直到<code>refcnt = 0</code>。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gjr3ufay6bj314g0owwyz.jpg" style="zoom: 33%;" /></p>
+<p>既然我们说每次打开一个新的文件，都是一个新的<code>fd</code>，并且不同进程之间是不共享描述符表的，那么在什么情况下<code>refcnt &gt; 1</code>呢？</p>
+<p>举个🌰，就是在<code>fork()</code>的时候。</p>
+<p>假设<code>a.txt</code>文件的内容是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="mi">123456789</span>
+<span class="n">abcdefghijk</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>执行下面这段代码。fork 一个子进程，在子进程里改变文件当前位置。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">// io.c
+</span><span class="c1"></span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;sys/fcntl.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;sys/stat.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;sys/wait.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="s">&#34;a.txt&#34;</span><span class="p">,</span> <span class="n">O_RDONLY</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">pid</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">((</span><span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 子进程
+</span><span class="c1"></span>        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;child process pid = %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">getpid</span><span class="p">());</span>
+        <span class="c1">// 移动文件当前位置
+</span><span class="c1"></span>        <span class="n">lseek</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="mi">10L</span><span class="p">,</span> <span class="n">SEEK_CUR</span><span class="p">);</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// 父进程
+</span><span class="c1"></span>    <span class="n">wait</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;father process pid = %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">getpid</span><span class="p">());</span>
+    <span class="kt">char</span> <span class="n">str</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+    <span class="n">str</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+    <span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">str</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;father read: %s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>输出结果如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">child</span> <span class="n">process</span> <span class="n">pid</span> <span class="o">=</span> <span class="mi">14292</span>
+<span class="n">father</span> <span class="n">process</span> <span class="n">pid</span> <span class="o">=</span> <span class="mi">14290</span>
+<span class="n">father</span> <span class="nl">read</span><span class="p">:</span> <span class="n">abcd</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>说明在子进程中移动文件当前位置的时候，父进程中文件位置也被影响了，所以最后读出的是<code>abcd</code>而不是<code>1234</code>。这是因为当我们<code>fork</code>了一个子进程之后，连着文件描述符表也拷贝了过来，而表中实际放着的是指向<code>打开文件表</code>的指针。既然拷贝的是指针，那么这两个进程实际指向的<code>文件表</code>其实是同一个。并且只有当父进程和子进程都关闭了文件之后，内核才会删除这个文件表表项。</p>
+<h4 id="命令">命令</h4>
+<p>进程通过<code>open</code>函数来打开一个已存在的文件或者创建一个新文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;sys/stat.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;sys/types.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;fcntl.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">int</span> <span class="nf">open</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">filename</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">,</span> <span class="n">mode_t</span> <span class="n">mode</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>open</code>将<code>filename</code>转换为一个文件描述符。文件描述符总是在进程中当前没有打开的最小描述符。</p>
+<p><code>flag</code>参数指明了进程打算如何访问这个文件。</p>
+<table>
+<thead>
+<tr>
+<th>flag</th>
+<th>含义</th>
+<th>flag</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O_RDONLY</td>
+<td>只读</td>
+<td>O_CREAT</td>
+<td>如果文件不存在，就创建一个空文件</td>
+</tr>
+<tr>
+<td>O_WRONLY</td>
+<td>只写</td>
+<td>O_TRUNC</td>
+<td>如果文件存在，则使其成为空文件</td>
+</tr>
+<tr>
+<td>O_RDWR</td>
+<td>读写</td>
+<td>O_APPEND</td>
+<td>在每次写操作前，设置文件位置到文件结尾处</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><code>fd = open(&quot;a.txt&quot;, O_WRONLY | O_APPEND);</code></p>
+<p>这个代码说明打开一个已存在的文件，在文件结尾处写东西。</p>
+</blockquote>
+<p><code>open</code>函数还有一个<code>mode</code>参数。指定了新文件的访问权限（由于需要是新文件，所以只对<code>O_CREAT</code>有效）。</p>
+<p>作为上下文的一部分，每一个进程都有一个<code>umask</code>，可以通过<code>umask</code>来设置。文件的访问权限就是<code>mode &amp; ~umask</code>。也就是<code>mode</code>所指定的权限去除掉<code>umask</code>中的权限。</p>
+<p><code>umask</code> 和 <code>mode</code>的各位的值可以如下：</p>
+<table>
+<thead>
+<tr>
+<th>掩码</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S_IRUSR</td>
+<td>使用者（拥有者）能够读这个文件</td>
+</tr>
+<tr>
+<td>S_IWUSR</td>
+<td>使用者（拥有者）能够写这个文件</td>
+</tr>
+<tr>
+<td>S_IXUSR</td>
+<td>使用者（拥有者）能够执行这个文件</td>
+</tr>
+<tr>
+<td>S_IRGRP</td>
+<td>拥有者所在组的成员能够读这个文件</td>
+</tr>
+<tr>
+<td>S_IWGRP</td>
+<td>拥有者所在组的成员能够写这个文件</td>
+</tr>
+<tr>
+<td>S_IXGRP</td>
+<td>拥有者所在组的成员能够执行这个文件</td>
+</tr>
+<tr>
+<td>S_IROTH</td>
+<td>其他人（任何人）能够读这个文件</td>
+</tr>
+<tr>
+<td>S_IWOTH</td>
+<td>其他人（任何人）能够写这个文件</td>
+</tr>
+<tr>
+<td>S_IXOTH</td>
+<td>其他人（任何人）能够执行这个文件</td>
+</tr>
+</tbody>
+</table>
+<p>系统一般会有默认的<code>umask</code>。比如我的电脑默认就是<code>022</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">&gt; <span class="nb">umask</span>
+<span class="m">022</span> <span class="c1"># 这个是个`ls -l`输出的文件权限`-rwxr-xr-x`含义是一样的。022 == -----w--w-</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">// 含义：文件拥有者有读写权限，所有其他人有读权限
+</span><span class="c1"></span><span class="cp">#define DEF_MODE   S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH
+</span><span class="cp">#define DEF_UMASK  S_IWGRP|S_IWOTH
+</span><span class="cp"></span><span class="n">umask</span><span class="p">(</span><span class="n">DEF_UMASK</span><span class="p">);</span> <span class="c1">// 如果没有设置，则默认是 022
+</span><span class="c1"></span><span class="kt">int</span> <span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="s">&#34;foo.txt&#34;</span><span class="p">,</span> <span class="n">O_CREAT</span><span class="o">|</span><span class="n">O_TRUNC</span><span class="o">|</span><span class="n">O_WRONLY</span><span class="p">,</span> <span class="n">DEF_MODE</span><span class="p">);</span>
+
+<span class="c1">// 直接用数字表示也可以，并且更直观。但是必须要最前面加上0，否则会按照十进制去解析它
+</span><span class="c1"></span><span class="n">umask</span><span class="p">(</span><span class="mo">0100</span><span class="p">);</span>
+<span class="kt">int</span> <span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="s">&#34;foo2.txt&#34;</span><span class="p">,</span> <span class="n">O_CREAT</span><span class="p">,</span> <span class="mo">0764</span><span class="p">);</span> <span class="c1">// -rwxrw-r-- 减去 ---x------ 等于 -rw-rw-r--
+</span><span class="c1"></span>
+<span class="c1">// 结果符合预期
+</span><span class="c1"></span><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span>  <span class="mi">1</span> <span class="n">bingoh</span>  <span class="n">staff</span>  <span class="mi">0</span> <span class="mi">10</span> <span class="mi">16</span> <span class="mi">14</span><span class="o">:</span><span class="mi">56</span> <span class="n">temp</span><span class="p">.</span><span class="n">txt</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="读写文件">读写文件</h2>
+<p>应用程序使用<code>read</code> 和<code>write</code>来执行输入和输出。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="n">ssize_t</span> <span class="nf">read</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">n</span><span class="p">);</span> <span class="c1">// 返回：若成功则为读的字节数，若 EOF 则为0，若出错为 -1。
+</span><span class="c1"></span><span class="n">ssize_t</span> <span class="nf">write</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">n</span><span class="p">);</span> <span class="c1">// 返回：若成功则为写的字节数，若出错则为 -1。
+</span></code></pre></td></tr></table>
+</div>
+</div><p><strong>用法</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="s">&#34;temp.txt&#34;</span><span class="p">,</span> <span class="n">O_CREAT</span> <span class="o">|</span> <span class="n">O_RDWR</span><span class="p">);</span>
+
+<span class="kt">char</span><span class="o">*</span> <span class="n">buf</span> <span class="o">=</span> <span class="s">&#34;hello world!&#34;</span><span class="p">;</span>
+<span class="n">write</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span> <span class="c1">// 写入文件
+</span><span class="c1"></span>
+<span class="kt">char</span> <span class="n">str</span><span class="p">[</span><span class="mi">11</span><span class="p">];</span> <span class="c1">// 必须大一些，最后放上 \0，否则会有意想不到的输出。
+</span><span class="c1"></span><span class="n">lseek</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="mi">0L</span><span class="p">,</span> <span class="n">SEEK_SET</span><span class="p">);</span> <span class="c1">// 文件位置回到开头
+</span><span class="c1"></span><span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">str</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">&#34;read: %s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span> <span class="c1">// read: hello worl
+</span><span class="c1"></span>
+<span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="带缓冲的读写">带缓冲的读写</h2>
+<p>众所周知，I/O是非常耗时的。当我们需要一个个读取文本文件中的字符的时候，频繁I/O会导致开销很大。一种经典的解决思路就是使用buffer，预先读数据填满缓冲区。用户从缓冲区读字符，当缓冲区为空时，再次调用I/O填满缓冲区。</p>
+<p>Robust I/O 是csapp中引入的一个包，健壮地实现了I/O。</p>
+<h4 id="rio无缓冲的输入输出函数">RIO无缓冲的输入输出函数</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&#34;csapp.h&#34;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="n">ssize_t</span> <span class="nf">rio_readn</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">usrbuf</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">n</span><span class="p">);</span>
+<span class="n">ssize_t</span> <span class="nf">rio_writen</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">usrbuf</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">n</span><span class="p">);</span> 
+<span class="c1">// 返回：若成功则为传送的字节数，若 EOF 则为 0(只对 rio_readn 而言)，若出错则为 -1。
+</span></code></pre></td></tr></table>
+</div>
+</div><p>这两个函数的实现如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">ssize_t</span> <span class="nf">rio_readn</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">usrbuf</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">size_t</span> <span class="n">nleft</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">ssize_t</span> <span class="n">nread</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">bufp</span> <span class="o">=</span> <span class="n">usrbuf</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">nleft</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">((</span><span class="n">nread</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">bufp</span><span class="p">,</span> <span class="n">nleft</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">errno</span> <span class="o">==</span> <span class="n">EINTR</span><span class="p">)</span> <span class="cm">/* Interrupted by sig handler return */</span>
+                <span class="n">nread</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>      <span class="cm">/* and call read() again */</span>
+            <span class="k">else</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>      <span class="cm">/* errno set by read() */</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">nread</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">break</span><span class="p">;</span>              <span class="cm">/* EOF */</span>
+        <span class="n">nleft</span> <span class="o">-=</span> <span class="n">nread</span><span class="p">;</span>
+        <span class="n">bufp</span> <span class="o">+=</span> <span class="n">nread</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">nleft</span><span class="p">);</span>         <span class="cm">/* Return &gt;= 0 */</span>
+<span class="p">}</span>
+
+<span class="n">ssize_t</span> <span class="nf">rio_writen</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">usrbuf</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">size_t</span> <span class="n">nleft</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">ssize_t</span> <span class="n">nwritten</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">bufp</span> <span class="o">=</span> <span class="n">usrbuf</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">nleft</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">((</span><span class="n">nwritten</span> <span class="o">=</span> <span class="n">write</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">bufp</span><span class="p">,</span> <span class="n">nleft</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">errno</span> <span class="o">==</span> <span class="n">EINTR</span><span class="p">)</span>  <span class="cm">/* Interrupted by sig handler return */</span>
+                <span class="n">nwritten</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>    <span class="cm">/* and call write() again */</span>
+            <span class="k">else</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>       <span class="cm">/* errno set by write() */</span>
+        <span class="p">}</span>
+        <span class="n">nleft</span> <span class="o">-=</span> <span class="n">nwritten</span><span class="p">;</span>
+        <span class="n">bufp</span> <span class="o">+=</span> <span class="n">nwritten</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">n</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>感觉除了在被中断之后，会重启<code>read</code>和<code>wirte</code>，其他和<code>read</code>、<code>wirte</code>并没有太大的区别。</p>
+<h4 id="rio-带缓冲的输入函数">RIO 带缓冲的输入函数</h4>
+<p>定义了一个结构，将缓冲区和文件描述符关联。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#define RIO_BUFSIZE 8192
+</span><span class="cp"></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">rio_fd</span><span class="p">;</span>                <span class="cm">/* 关联的文件描述符 */</span>
+    <span class="kt">int</span> <span class="n">rio_cnt</span><span class="p">;</span>               <span class="cm">/* 缓冲中未读的字节 */</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">rio_bufptr</span><span class="p">;</span>          <span class="cm">/* 指向下一个未读的指针 */</span>
+    <span class="kt">char</span> <span class="n">rio_buf</span><span class="p">[</span><span class="n">RIO_BUFSIZE</span><span class="p">];</span> <span class="cm">/* 内置的缓冲区 */</span>
+<span class="p">}</span> <span class="n">rio_t</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gjr8ozp0wfj31jb0u01d2.jpg" alt=""></p>
+<p>执行<code>rio_readinitb</code>将<code>fd</code>与<code>rio_t</code>相关联</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">rio_readinitb</span><span class="p">(</span><span class="n">rio_t</span> <span class="o">*</span><span class="n">rp</span><span class="p">,</span> <span class="kt">int</span> <span class="n">fd</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">rp</span><span class="o">-&gt;</span><span class="n">rio_fd</span> <span class="o">=</span> <span class="n">fd</span><span class="p">;</span>
+    <span class="n">rp</span><span class="o">-&gt;</span><span class="n">rio_cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">rp</span><span class="o">-&gt;</span><span class="n">rio_bufptr</span> <span class="o">=</span> <span class="n">rp</span><span class="o">-&gt;</span><span class="n">rio_buf</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>之后调用<code>rio_read</code>就是按照上图进行读了。如果缓冲区是空的，则使用系统函数<code>read</code>去读。若非空则直接在缓冲区读。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">ssize_t</span> <span class="nf">rio_read</span><span class="p">(</span><span class="n">rio_t</span> <span class="o">*</span><span class="n">rp</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">usrbuf</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">cnt</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">rp</span><span class="o">-&gt;</span><span class="n">rio_cnt</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>  <span class="cm">/* Refill if buf is empty */</span>
+        <span class="n">rp</span><span class="o">-&gt;</span><span class="n">rio_cnt</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">rp</span><span class="o">-&gt;</span><span class="n">rio_fd</span><span class="p">,</span> <span class="n">rp</span><span class="o">-&gt;</span><span class="n">rio_buf</span><span class="p">,</span>
+                           <span class="k">sizeof</span><span class="p">(</span><span class="n">rp</span><span class="o">-&gt;</span><span class="n">rio_buf</span><span class="p">));</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rp</span><span class="o">-&gt;</span><span class="n">rio_cnt</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">EINTR</span><span class="p">)</span> <span class="cm">/* Interrupted by sig handler return */</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rp</span><span class="o">-&gt;</span><span class="n">rio_cnt</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>  <span class="cm">/* EOF */</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">else</span>
+            <span class="n">rp</span><span class="o">-&gt;</span><span class="n">rio_bufptr</span> <span class="o">=</span> <span class="n">rp</span><span class="o">-&gt;</span><span class="n">rio_buf</span><span class="p">;</span> <span class="cm">/* Reset buffer ptr */</span>
+    <span class="p">}</span>
+
+    <span class="cm">/* Copy min(n, rp-&gt;rio_cnt) bytes from internal buf to user buf */</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rp</span><span class="o">-&gt;</span><span class="n">rio_cnt</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="n">rp</span><span class="o">-&gt;</span><span class="n">rio_cnt</span><span class="p">;</span>
+    <span class="n">memcpy</span><span class="p">(</span><span class="n">usrbuf</span><span class="p">,</span> <span class="n">rp</span><span class="o">-&gt;</span><span class="n">rio_bufptr</span><span class="p">,</span> <span class="n">cnt</span><span class="p">);</span>
+    <span class="n">rp</span><span class="o">-&gt;</span><span class="n">rio_bufptr</span> <span class="o">+=</span> <span class="n">cnt</span><span class="p">;</span>
+    <span class="n">rp</span><span class="o">-&gt;</span><span class="n">rio_cnt</span> <span class="o">-=</span> <span class="n">cnt</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">cnt</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><input disabled="" type="checkbox"> </li>
+</ul>
+<p>可以看出来，如果文件大小比缓冲区大的话，即便你要读的字节数小于文件大小，也不能读满想要的字节数。</p>
+<h2 id="文件元数据">文件元数据</h2>
+<p>调用 <code>stat</code> 和 <code>fstat</code> 函数获得文件的基本信息。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;sys/stat.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">int</span> <span class="nf">stat</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">filename</span><span class="p">,</span> <span class="k">struct</span> <span class="n">stat</span> <span class="o">*</span><span class="n">buf</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">fstat</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="k">struct</span> <span class="n">stat</span> <span class="o">*</span><span class="n">buf</span><span class="p">);</span> <span class="c1">// 返回：若成功则为 0，若出错则为 -1。
+</span></code></pre></td></tr></table>
+</div>
+</div><p>元信息被存储到 <code>buf</code>中，结构如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cm">/* Metadata returned by the stat and fstat functions */</span>
+<span class="k">struct</span> <span class="n">stat</span> <span class="p">{</span>
+    <span class="n">dev_t</span>         <span class="n">st_dev</span><span class="p">;</span>      <span class="cm">/* Device */</span>
+    <span class="n">ino_t</span>         <span class="n">st_ino</span><span class="p">;</span>      <span class="cm">/* inode */</span>
+    <span class="n">mode_t</span>        <span class="n">st_mode</span><span class="p">;</span>     <span class="cm">/* Protection and file type */</span>
+    <span class="n">nlink_t</span>       <span class="n">st_nlink</span><span class="p">;</span>    <span class="cm">/* Number of hard links */</span>
+    <span class="n">uid_t</span>         <span class="n">st_uid</span><span class="p">;</span>      <span class="cm">/* User ID of owner */</span>
+    <span class="n">gid_t</span>         <span class="n">st_gid</span><span class="p">;</span>      <span class="cm">/* Group ID of owner */</span>
+    <span class="n">dev_t</span>         <span class="n">st_rdev</span><span class="p">;</span>     <span class="cm">/* Device type (if inode device) */</span>
+    <span class="n">off_t</span>         <span class="n">st_size</span><span class="p">;</span>     <span class="cm">/* Total size, in bytes */</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">st_blksize</span><span class="p">;</span>  <span class="cm">/* Block size for filesystem I/O */</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">st_blocks</span><span class="p">;</span>   <span class="cm">/* Number of blocks allocated */</span>
+    <span class="n">time_t</span>        <span class="n">st_atime</span><span class="p">;</span>    <span class="cm">/* Time of last access */</span>
+    <span class="n">time_t</span>        <span class="n">st_mtime</span><span class="p">;</span>    <span class="cm">/* Time of last modification */</span>
+    <span class="n">time_t</span>        <span class="n">st_ctime</span><span class="p">;</span>    <span class="cm">/* Time of last change */</span>
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="目录">目录</h2>
+<p>调用<code>opendir</code>打开目录，返回指向<strong>目录流</strong>（directory stream）的指针。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;sys/types.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;dirent.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="n">DIR</span> <span class="o">*</span><span class="nf">opendir</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">);</span> <span class="c1">// 返回：若成功，则为处理的指针；若出错，则为 NULL。
+</span></code></pre></td></tr></table>
+</div>
+</div><p>用<code>readdir</code>来读目录。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;dirent.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="k">struct</span> <span class="n">dirent</span> <span class="o">*</span><span class="nf">readdir</span><span class="p">(</span><span class="n">DIR</span> <span class="o">*</span><span class="n">dirp</span><span class="p">);</span>
+<span class="c1">// 返回：若成功，则为指向下一个目录项的指针；若没有更多的目录项或出错，则为 NULL。
+</span></code></pre></td></tr></table>
+</div>
+</div><p><code>dirent</code> 的结构如下。读并不是递归的，可以结合<code>stat</code>知道更详细的情况。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="n">dirent</span> <span class="p">{</span>
+    <span class="n">ino_t</span> <span class="n">d_ino</span><span class="p">;</span>      <span class="cm">/* inode number */</span>
+    <span class="kt">char</span> <span class="n">d_name</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span> <span class="cm">/* Filename */</span>
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="io重定向">I/O重定向</h2>
+<p><code>dup2</code> 函数复制描述符表表项 <code>oldfd</code> 到描述符表表项 <code>newfd</code>，覆盖描述符表表项 <code>newfd</code> 以前的内容。如果 <code>newfd</code> 已经打开了，<code>dup2</code> 会在复制 <code>oldfd</code> 之前关闭 <code>newfd</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">int</span> <span class="nf">dup2</span><span class="p">(</span><span class="kt">int</span> <span class="n">oldfd</span><span class="p">,</span> <span class="kt">int</span> <span class="n">newfd</span><span class="p">);</span> <span class="c1">// 返回：若成功则为非负的描述符，若出错则为 -1。
+</span></code></pre></td></tr></table>
+</div>
+</div><p>说的更直白一点就是，现在有一个已经打开的文件描述符 <code>oldfd</code>，把它在描述符表中的指针，复制给<code>newfd</code>，使得<code>newfd</code>也指向同一个文件表。倘若之前<code>newfd</code>已经存在的话，则先关闭再新建。</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">彬Goh</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-10-17
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/csapp/">csapp</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/algorithm_sort/">
+            <span class="next-text nav-default">「算法」经典排序算法的Go实现</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="http://www.binfromfd.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme -
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+    <span class="division">|</span>
+    <span class="theme-info">
+         <a class="theme-link" href="http://www.beian.gov.cn">沪ICP备20004025-1号</a>
+    </span>
+
+    
+
+  <span class="copyright-year">
+    &copy; 
+    2020<span class="heart"><i class="iconfont icon-heart"></i></span><span>彬Goh</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
