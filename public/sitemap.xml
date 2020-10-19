@@ -3,7 +3,49 @@
   
   <url>
     <loc>http://www.binfromfd.cn/categories/</loc>
-    <lastmod>2020-10-17T13:19:33+08:00</lastmod>
+    <lastmod>2020-10-19T14:44:49+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.binfromfd.cn/post/</loc>
+    <lastmod>2020-10-19T14:44:49+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.binfromfd.cn/tags/</loc>
+    <lastmod>2020-10-19T14:44:49+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.binfromfd.cn/</loc>
+    <lastmod>2020-10-19T14:44:49+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.binfromfd.cn/post/blog_auth/</loc>
+    <lastmod>2020-10-19T14:44:49+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.binfromfd.cn/categories/%E5%BC%80%E5%8F%91-%E5%90%8E%E7%AB%AF/</loc>
+    <lastmod>2020-10-19T14:44:49+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.binfromfd.cn/tags/%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81/</loc>
+    <lastmod>2020-10-19T14:44:49+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -16,28 +58,7 @@
   </url>
   
   <url>
-    <loc>http://www.binfromfd.cn/post/</loc>
-    <lastmod>2020-10-17T13:19:33+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://www.binfromfd.cn/tags/</loc>
-    <lastmod>2020-10-17T13:19:33+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>http://www.binfromfd.cn/post/blog_unix_io/</loc>
-    <lastmod>2020-10-17T13:19:33+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://www.binfromfd.cn/</loc>
     <lastmod>2020-10-17T13:19:33+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

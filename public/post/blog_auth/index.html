@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>从个人博客搭建谈用户认证 - 「彬Goh」的个人博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="彬Goh" /><meta name="description" content="从个人博客搭建谈用户认证" /><meta name="keywords" content="登陆, jwt, token, session" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.75.1 with theme even" />
+
+
+<link rel="canonical" href="http://www.binfromfd.cn/post/blog_auth/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f8e630b43e969857a189f7cc4d74b67032c29495708687d56ce9e8605c6bca1d.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="从个人博客搭建谈用户认证" />
+<meta property="og:description" content="从个人博客搭建谈用户认证" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.binfromfd.cn/post/blog_auth/" />
+<meta property="article:published_time" content="2020-10-19T14:44:49+08:00" />
+<meta property="article:modified_time" content="2020-10-19T14:44:49+08:00" />
+<meta itemprop="name" content="从个人博客搭建谈用户认证">
+<meta itemprop="description" content="从个人博客搭建谈用户认证">
+<meta itemprop="datePublished" content="2020-10-19T14:44:49+08:00" />
+<meta itemprop="dateModified" content="2020-10-19T14:44:49+08:00" />
+<meta itemprop="wordCount" content="3318">
+
+
+
+<meta itemprop="keywords" content="用户认证," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="从个人博客搭建谈用户认证"/>
+<meta name="twitter:description" content="从个人博客搭建谈用户认证"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">「彬Goh」的个人博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">「彬Goh」的个人博客</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">从个人博客搭建谈用户认证</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-10-19 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%BC%80%E5%8F%91-%E5%90%8E%E7%AB%AF/"> 开发-后端 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#session">session</a>
+          <ul>
+            <li><a href="#前台页面">前台页面</a></li>
+            <li><a href="#登陆页面">登陆页面</a></li>
+            <li><a href="#后台管理">后台管理</a></li>
+            <li><a href="#源码阅读">源码阅读</a></li>
+          </ul>
+        </li>
+        <li><a href="#token">token</a>
+          <ul>
+            <li><a href="#基本登陆和验证的代码实现">基本登陆和验证的代码实现</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>假设我们现在需要搭建一个个人博客，除了展示给访问者的页面之外，还有一个后台管理系统。管理者通过用户名密码登陆，然后在后台管理博文、评论、标签等。</p>
+<p>前台展示是所有访问者都能获取的，而后台管理只有登陆之后才能获取相关权限。众所周知，<code>http</code>是一个无状态协议，所以通过登录页面进入后台管理页面之后，服务器并不会“记住”你曾经登陆过。那我们怎么保证后台管理页面只有登陆的人才能访问，而且不需要每次访问都让用户输入用户名和密码呢？</p>
+<p>这就是用户认证机制。一般我们使用<code>session</code>或者<code>token</code>来进行用户验证。</p>
+<h2 id="session">session</h2>
+<p>用户第一次登陆时，需要输入用户名和密码。服务端在对用户名密码验证之后，生成<code>session</code>，并返回一个<code>session id</code>，存储在<code>cookie</code>中。之后用户再点击后台管理页面的其他接口时，需要带上这个<code>session id</code>。服务端通过查看用户的<code>seesion id</code>来判断用户的登录状态与个人信息。</p>
+<p>使用 golang 的 gin 框架与<code>&quot;github.com/go-session/session&quot;</code>包来做一个小小的 demo。个人博客的接口如下：</p>
+<table>
+<thead>
+<tr>
+<th>路由</th>
+<th>请求类型</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/</code></td>
+<td>GET</td>
+<td>前台展示页面</td>
+</tr>
+<tr>
+<td><code>/display</code></td>
+<td>GET</td>
+<td>前台展示页面</td>
+</tr>
+<tr>
+<td><code>/login</code></td>
+<td>POST</td>
+<td>登陆页面</td>
+</tr>
+<tr>
+<td><code>/admin/blog</code></td>
+<td>GET</td>
+<td>后台管理博文</td>
+</tr>
+<tr>
+<td><code>/admin/logout</code></td>
+<td>GET</td>
+<td>登出</td>
+</tr>
+</tbody>
+</table>
+<h3 id="前台页面">前台页面</h3>
+<p>这个页面并不需要登陆状态，任何人可以访问</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 基础设置
+</span><span class="c1"></span><span class="nx">router</span> <span class="o">:=</span> <span class="nx">gin</span><span class="p">.</span><span class="nf">Default</span><span class="p">()</span>
+<span class="nx">session</span><span class="p">.</span><span class="nf">InitManager</span><span class="p">(</span>
+    <span class="nx">session</span><span class="p">.</span><span class="nf">SetCookieName</span><span class="p">(</span><span class="s">&#34;session_id&#34;</span><span class="p">),</span> <span class="c1">// cookie 的名字
+</span><span class="c1"></span>    <span class="nx">session</span><span class="p">.</span><span class="nf">SetSign</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;sign&#34;</span><span class="p">)),</span> <span class="c1">// 签名
+</span><span class="c1"></span><span class="p">)</span>
+
+<span class="c1">// 前台展示界面
+</span><span class="c1"></span><span class="nx">router</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="nx">hello</span><span class="p">)</span>
+<span class="nx">router</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="s">&#34;/display&#34;</span><span class="p">,</span> <span class="nx">hello</span><span class="p">)</span>
+
+<span class="c1">// 监听 8080 端口
+</span><span class="c1"></span><span class="nx">router</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="s">&#34;localhost:8080&#34;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>访问<code>/</code>和<code>/display</code>时返回问候语：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// &#34;/display&#34;
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">hello</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">c</span><span class="p">.</span><span class="nf">JSON</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span><span class="p">,</span> <span class="nx">gin</span><span class="p">.</span><span class="nx">H</span><span class="p">{</span>
+        <span class="s">&#34;message&#34;</span><span class="p">:</span> <span class="s">&#34;this is display page! hello!&#34;</span><span class="p">,</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>用postman访问<code>127.0.0.1:8080/display</code>或者<code>127.0.0.1:8080</code>，得到响应如下：</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gjsfkly7msj31jg0ai75s.jpg" alt=""></p>
+<h3 id="登陆页面">登陆页面</h3>
+<p>需要获得用户名和密码，检验是否可以登陆。登陆成功之后重定向到个人博客管理后台。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 登陆
+</span><span class="c1"></span><span class="nx">router</span><span class="p">.</span><span class="nf">POST</span><span class="p">(</span><span class="s">&#34;/login&#34;</span><span class="p">,</span> <span class="nx">login</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>登陆使用<code>post</code>请求。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Info</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">UsrName</span>  <span class="kt">string</span> <span class="s">`json:&#34;usr_name&#34;`</span>
+    <span class="nx">Password</span> <span class="kt">string</span> <span class="s">`json:&#34;password&#34;`</span>
+<span class="p">}</span>
+
+<span class="c1">// &#34;/login&#34;
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">login</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 绑定请求体，得到用户名和密码
+</span><span class="c1"></span>    <span class="nx">info</span> <span class="o">:=</span> <span class="nx">Info</span><span class="p">{}</span>
+    <span class="nx">c</span><span class="p">.</span><span class="nf">BindJSON</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">info</span><span class="p">)</span>
+
+    <span class="c1">// 验证用户名密码
+</span><span class="c1"></span>    <span class="k">if</span> <span class="nx">info</span><span class="p">.</span><span class="nx">UsrName</span> <span class="o">==</span> <span class="s">&#34;admin&#34;</span> <span class="o">&amp;&amp;</span> <span class="nx">info</span><span class="p">.</span><span class="nx">Password</span> <span class="o">==</span> <span class="s">&#34;123456&#34;</span> <span class="p">{</span>
+        <span class="c1">// 登陆成功， 生成一个会话
+</span><span class="c1"></span>        <span class="nx">store</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">session</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Writer</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span>
+        <span class="nx">store</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">&#34;usrName&#34;</span><span class="p">,</span> <span class="nx">info</span><span class="p">.</span><span class="nx">UsrName</span><span class="p">)</span>
+        <span class="nx">store</span><span class="p">.</span><span class="nf">Save</span><span class="p">()</span>
+        <span class="c1">// 重定向到博文管理
+</span><span class="c1"></span>        <span class="nx">c</span><span class="p">.</span><span class="nf">Redirect</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusMovedPermanently</span><span class="p">,</span> <span class="s">&#34;/admin/blog&#34;</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// 登陆失败
+</span><span class="c1"></span>        <span class="nx">c</span><span class="p">.</span><span class="nf">JSON</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusUnauthorized</span><span class="p">,</span> <span class="nx">gin</span><span class="p">.</span><span class="nx">H</span><span class="p">{</span>
+            <span class="s">&#34;massage&#34;</span><span class="p">:</span> <span class="s">&#34;you are not allowed to login!&#34;</span><span class="p">,</span>
+        <span class="p">})</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// &#34;/admin/blog&#34;
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">adminBlog</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">c</span><span class="p">.</span><span class="nf">JSON</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span><span class="p">,</span> <span class="nx">gin</span><span class="p">.</span><span class="nx">H</span><span class="p">{</span>
+        <span class="s">&#34;message&#34;</span><span class="p">:</span> <span class="s">&#34;this is your personal blog page!&#34;</span><span class="p">,</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>当登陆密码错误时：</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gjsfylm12nj31jg0o00wa.jpg" alt=""></p>
+<p>当登陆密码正确时，直接重定向到个人博文管理</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gjsfzrhl9oj31jc0osjuw.jpg" alt=""></p>
+<p>仅仅是上面当然是不够的，最重要的是登陆成功之后生成了一个<code>session id</code>并返回给浏览器。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gjsg395ms5j31120463za.jpg" alt=""></p>
+<p>用postman查看<code>cookie</code>如上所示，并且设置了默认过期时间。当下次再用postman访问相同域名时，就会带上这个<code>cookie</code>。</p>
+<h3 id="后台管理">后台管理</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 后台管理界面
+</span><span class="c1"></span><span class="nx">g</span> <span class="o">:=</span> <span class="nx">router</span><span class="p">.</span><span class="nf">Group</span><span class="p">(</span><span class="s">&#34;/admin&#34;</span><span class="p">,</span> <span class="nx">adminCheck</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nx">g</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="s">&#34;/blog&#34;</span><span class="p">,</span> <span class="nx">adminBlog</span><span class="p">)</span>
+    <span class="nx">g</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="s">&#34;/logout&#34;</span><span class="p">,</span> <span class="nx">adminLogout</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// &#34;/admin&#34;
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">adminCheck</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 检验登陆状态
+</span><span class="c1"></span>    <span class="nx">store</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">session</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Writer</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span>
+    <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">store</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;usrName&#34;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">ok</span> <span class="p">{</span>
+        <span class="c1">// 登陆成功，继续执行逻辑
+</span><span class="c1"></span>        <span class="nx">c</span><span class="p">.</span><span class="nf">Next</span><span class="p">()</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// 登陆失败，停止
+</span><span class="c1"></span>        <span class="nx">c</span><span class="p">.</span><span class="nf">JSON</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusUnauthorized</span><span class="p">,</span> <span class="nx">gin</span><span class="p">.</span><span class="nx">H</span><span class="p">{</span>
+            <span class="s">&#34;massage&#34;</span><span class="p">:</span> <span class="s">&#34;you are not allowed!&#34;</span><span class="p">,</span>
+        <span class="p">})</span>
+        <span class="nx">c</span><span class="p">.</span><span class="nf">Abort</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// &#34;/admin/logout&#34;
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">adminLogout</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">store</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">session</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Writer</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span>
+    <span class="nx">store</span><span class="p">.</span><span class="nf">Delete</span><span class="p">(</span><span class="s">&#34;usrName&#34;</span><span class="p">)</span>
+    <span class="nx">c</span><span class="p">.</span><span class="nf">JSON</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span><span class="p">,</span> <span class="nx">gin</span><span class="p">.</span><span class="nx">H</span><span class="p">{</span>
+        <span class="s">&#34;message&#34;</span><span class="p">:</span> <span class="s">&#34;logout!&#34;</span><span class="p">,</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>对于所有前缀是 <code>/admin</code>得到接口，都认为是需要登陆的。所以加上中间件，进行登陆状态的检验。<code>登陆</code>是在<code>session</code>中存储键值对，那么<code>检验登陆</code>就是查看这个键值对是否存在。如果不存在，则说明不是登陆状态。例如我们这里存储了<code>userName</code>，那么这个值可以取出来供后续<code>CRUD</code>使用。而登出时删除这个键值对即可。</p>
+<p>在未登陆的时候直接访问<code>/admin/blog</code>，请求被拒绝。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gjsgc6au5oj31jk0o80w4.jpg" alt=""></p>
+<p>在执行<code>/login</code>并成功登陆之后，请访问成功！在登陆之后请求<code>/logout</code>，退出成功，并且不能再访问<code>/admin/blog</code>。</p>
+<h3 id="源码阅读">源码阅读</h3>
+<p>创建和获得一个<code>session</code>的函数如下所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">session</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Writer</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>处理逻辑如下：</p>
+<ol>
+<li>根据请求获得 <code>session id</code></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">sid</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">m</span><span class="p">.</span><span class="nf">sessionID</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="c1">// 先不必在意 m 是什么，知道这个是获取 session id 即可
+</span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>如果 <code>session id</code> 不为空，则在内存中找这个<code>id</code>下存储的键值对</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 如果 session id 不为空， 则检验它
+</span><span class="c1"></span><span class="k">if</span> <span class="nx">sid</span> <span class="o">!=</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
+   <span class="k">if</span> <span class="nx">exists</span><span class="p">,</span> <span class="nx">verr</span> <span class="o">:=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">opts</span><span class="p">.</span><span class="nx">store</span><span class="p">.</span><span class="nf">Check</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">sid</span><span class="p">);</span> <span class="nx">verr</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">verr</span>
+   <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">exists</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">m</span><span class="p">.</span><span class="nx">opts</span><span class="p">.</span><span class="nx">store</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">sid</span><span class="p">,</span> <span class="nx">m</span><span class="p">.</span><span class="nx">opts</span><span class="p">.</span><span class="nx">expired</span><span class="p">)</span> <span class="c1">// 重新设置过期时间
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上面的 <code>Check</code>函数实现如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">memoryStore</span><span class="p">)</span> <span class="nf">Check</span><span class="p">(</span><span class="nx">_</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">sid</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">bool</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 加锁，并获取 sid 的内容
+</span><span class="c1"></span>    <span class="nx">s</span><span class="p">.</span><span class="nf">RLock</span><span class="p">()</span>
+    <span class="nx">item</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">s</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="nx">sid</span><span class="p">]</span>
+    <span class="nx">s</span><span class="p">.</span><span class="nf">RUnlock</span><span class="p">()</span>
+
+    <span class="c1">// 如果能找到，并且没有过期则返回 true
+</span><span class="c1"></span>    <span class="k">if</span> <span class="nx">ok</span> <span class="o">&amp;&amp;</span> <span class="nx">item</span><span class="p">.</span><span class="nx">expiredAt</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="nf">now</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">nil</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果这个<code>session</code>是存在并且没有过期的，则重新设置过期时间。</p>
+<ol start="3">
+<li>如果  <code>session id</code> 不存在或者过期了，则创建一个新的<code>session</code>，同时把<code>session id</code>写到<code>cookie</code>中。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">store</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">opts</span><span class="p">.</span><span class="nx">store</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">m</span><span class="p">.</span><span class="nx">opts</span><span class="p">.</span><span class="nf">sessionID</span><span class="p">(),</span> <span class="nx">m</span><span class="p">.</span><span class="nx">opts</span><span class="p">.</span><span class="nx">expired</span><span class="p">)</span> <span class="c1">// 创建一个 session
+</span><span class="c1"></span><span class="nx">m</span><span class="p">.</span><span class="nf">setCookie</span><span class="p">(</span><span class="nx">store</span><span class="p">.</span><span class="nf">SessionID</span><span class="p">(),</span> <span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="token">token</h2>
+<p><code>session</code>的问题在于它需要服务器开辟内存空间来存储键值对。如果是单机，只是占用了内存；但如果是分布式，那么数据同步就会非常麻烦。同时如果把<code>session</code>相关的内容存在数据库里，查询效率非常低。所以另一种被广泛运用的用户认证方式就是<code>token</code>。这里讲一讲一种<code>token</code>实现方式：<code>jwt</code>：<code>json web token</code>。</p>
+<p>JWT 分成3个部分：</p>
+<ol>
+<li>Header</li>
+<li>Payload</li>
+<li>Verify Signature</li>
+</ol>
+<p>Header 部分说明了编码算法；Payload部分是添加的表明用户身份的信息；Verify Signature 对上述信息进行加密，得到一个字符串。然后对这三个部分分别进行编码（注意不是加密），并用<code>.</code>分割，就形成了一个<code>token</code>字符串。形如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdXRoIjoidHJ1ZSIsImV4cCI6MTYwMzA3OTAwNCwiaWQiOjF9.2bjfmbc0n-L65Axg4WsDOmtNAM2ikhLQ8cgBc75AiJd-xCwNTVS1sn7MOempKxhEdWHIaJuhe6zZ69TRLunEuw
+</code></pre></td></tr></table>
+</div>
+</div><p>在<a href="https://jwt.io">jwt官网</a>用<code>HS512</code>算法对其进行解码（jwt有多种编码方式），可以得到这三个部分的数据。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Header:
+{
+  &#34;alg&#34;: &#34;HS512&#34;,
+  &#34;typ&#34;: &#34;JWT&#34;
+}
+
+PAYLOAD:
+{
+  &#34;auth&#34;: &#34;true&#34;,
+  &#34;exp&#34;: 1603079004,
+  &#34;id&#34;: 1
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>上面两个部分只是编码和解码，<strong>所以可以认为是明文传输</strong>。只有最后一个部分是加了密的。它是根据前面两个部分+你的密钥来加密。当你得到用户传过来的<code>jwt</code>时，只需要用自己的密钥对前两个部分再次加密，并对比<code>验证签名</code>部分，如果一致，就说明用户信息并未被修改，且用户是登陆过的。如果不一致，说明代表用户信息的这个部分被修改过了，那么就是不可信的，拒绝登陆。</p>
+<blockquote>
+<p>这个其实和https的数字签名是一样的。在参加数学建模竞赛的时候，为了缓解大家一起提交论文的时候服务器压力过大，也是先给你的论文生成一个MD5码。参赛者先提交MD5码，之后再慢慢提交论文。如果你的论文修改了任意内容，MD5都会变化。必须保证你的MD5码和论文生成的是一致的。</p>
+</blockquote>
+<p>这种做法有2个弊端：</p>
+<ol>
+<li>JWT是无状态的，判断是否过期只是根据你的PAYLOAD中的字段，所以只有等它过期了之后你才能拒绝登陆，否则一旦jwt颁发出去，就一直是有效的。</li>
+<li>当token过期之后，需要重新再登陆，这使得用户体验很差。</li>
+</ol>
+<p>我们可以通过以下方式来解决上述问题：</p>
+<ol>
+<li>存储jwt元信息，比如redis。这样如果用户登出，从redis中删除这个jwt就行了。或者是增加一个黑名单，先过滤一下。</li>
+<li>使用<code>refresh token</code>来产生新的token。给用户办法的用于登陆的<code>token</code>期限比较短，<code>refresh token</code>期限比较长。如果用户保持登陆状态，即使<code>token</code>过期，只要<code>refresh token</code>没过期，可以自动获取新的<code>token</code>，提高用户体验。</li>
+</ol>
+<blockquote>
+<p>个人觉得用redis存储jwt相比直接session内容存在内存或db中的优点在于，存储内容比较少，而且读写更快。</p>
+</blockquote>
+<h3 id="基本登陆和验证的代码实现">基本登陆和验证的代码实现</h3>
+<h4 id="登陆">登陆</h4>
+<p>阅读 <code>github.com/dgrijalva/jwt-go</code></p>
+<p>一个简单的登陆例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">CreateToken</span><span class="p">(</span><span class="nx">id</span> <span class="kt">uint64</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">){</span>
+    <span class="c1">// atClaims 是PAYLOAD部分
+</span><span class="c1"></span>    <span class="nx">atClaims</span> <span class="o">:=</span> <span class="nx">jwt</span><span class="p">.</span><span class="nx">MapClaims</span><span class="p">{}</span>
+    <span class="nx">atClaims</span><span class="p">[</span><span class="s">&#34;auth&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="s">&#34;true&#34;</span>
+    <span class="nx">atClaims</span><span class="p">[</span><span class="s">&#34;id&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="nx">id</span>
+    <span class="nx">atClaims</span><span class="p">[</span><span class="s">&#34;exp&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">().</span><span class="nf">Add</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Minute</span> <span class="o">*</span> <span class="mi">15</span><span class="p">).</span><span class="nf">Unix</span><span class="p">()</span> <span class="c1">// 默认验证的就是 &#34;exp&#34;字段
+</span><span class="c1"></span>    <span class="c1">// 生成一个结构体
+</span><span class="c1"></span>    <span class="nx">at</span> <span class="o">:=</span> <span class="nx">jwt</span><span class="p">.</span><span class="nf">NewWithClaims</span><span class="p">(</span><span class="nx">jwt</span><span class="p">.</span><span class="nx">SigningMethodHS512</span><span class="p">,</span> <span class="nx">atClaims</span><span class="p">)</span>
+    <span class="c1">// 签名并返回token
+</span><span class="c1"></span>    <span class="nx">token</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">at</span><span class="p">.</span><span class="nf">SignedString</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;asjdklqwejkqjkl&#34;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;err: %s\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1">// 放在 response header 中
+</span><span class="c1"></span>    <span class="nx">c</span><span class="p">.</span><span class="nf">Header</span><span class="p">(</span><span class="s">&#34;jwt&#34;</span><span class="p">,</span> <span class="nx">token</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">token</span><span class="p">,</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>源码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 生成结构体
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">NewWithClaims</span><span class="p">(</span><span class="nx">method</span> <span class="nx">SigningMethod</span><span class="p">,</span> <span class="nx">claims</span> <span class="nx">Claims</span><span class="p">)</span> <span class="o">*</span><span class="nx">Token</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">&amp;</span><span class="nx">Token</span><span class="p">{</span>
+        <span class="nx">Header</span><span class="p">:</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}{</span>
+            <span class="s">&#34;typ&#34;</span><span class="p">:</span> <span class="s">&#34;JWT&#34;</span><span class="p">,</span> <span class="c1">// 固定的
+</span><span class="c1"></span>            <span class="s">&#34;alg&#34;</span><span class="p">:</span> <span class="nx">method</span><span class="p">.</span><span class="nf">Alg</span><span class="p">(),</span> <span class="c1">// 编码算法
+</span><span class="c1"></span>        <span class="p">},</span>
+        <span class="nx">Claims</span><span class="p">:</span> <span class="nx">claims</span><span class="p">,</span>
+        <span class="nx">Method</span><span class="p">:</span> <span class="nx">method</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 签名并得到完整的token
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">Token</span><span class="p">)</span> <span class="nf">SignedString</span><span class="p">(</span><span class="nx">key</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">sig</span><span class="p">,</span> <span class="nx">sstr</span> <span class="kt">string</span>
+    <span class="kd">var</span> <span class="nx">err</span> <span class="kt">error</span>
+    <span class="c1">// 对前两个部分编码
+</span><span class="c1"></span>    <span class="k">if</span> <span class="nx">sstr</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">t</span><span class="p">.</span><span class="nf">SigningString</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">err</span>
+    <span class="p">}</span>
+    <span class="c1">// 签名
+</span><span class="c1"></span>    <span class="k">if</span> <span class="nx">sig</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">t</span><span class="p">.</span><span class="nx">Method</span><span class="p">.</span><span class="nf">Sign</span><span class="p">(</span><span class="nx">sstr</span><span class="p">,</span> <span class="nx">key</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">err</span>
+    <span class="p">}</span>
+    <span class="c1">// 返回token
+</span><span class="c1"></span>    <span class="k">return</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">Join</span><span class="p">([]</span><span class="kt">string</span><span class="p">{</span><span class="nx">sstr</span><span class="p">,</span> <span class="nx">sig</span><span class="p">},</span> <span class="s">&#34;.&#34;</span><span class="p">),</span> <span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="c1">// 对前两个部分编码
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">Token</span><span class="p">)</span> <span class="nf">SigningString</span><span class="p">()</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">err</span> <span class="kt">error</span>
+    <span class="nx">parts</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">string</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">parts</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">jsonValue</span> <span class="p">[]</span><span class="kt">byte</span>
+        <span class="k">if</span> <span class="nx">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+            <span class="c1">// Header 部分，将结构体序列化成字节
+</span><span class="c1"></span>            <span class="k">if</span> <span class="nx">jsonValue</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">Marshal</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">Header</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">err</span>
+            <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// PAYLOAD 部分，将结构体序列化成字节
+</span><span class="c1"></span>            <span class="k">if</span> <span class="nx">jsonValue</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">Marshal</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">Claims</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">err</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="c1">// 编码
+</span><span class="c1"></span>        <span class="nx">parts</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nf">EncodeSegment</span><span class="p">(</span><span class="nx">jsonValue</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1">// 用 . 分隔
+</span><span class="c1"></span>    <span class="k">return</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="nx">parts</span><span class="p">,</span> <span class="s">&#34;.&#34;</span><span class="p">),</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="验证">验证</h4>
+<p>代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">verifyToken</span><span class="p">(</span><span class="nx">tokenString</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">jwt</span><span class="p">.</span><span class="nx">Token</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 验证是否是颁发的token以及是否过期等信息，存在token里面
+</span><span class="c1"></span>    <span class="nx">token</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">jwt</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="nx">tokenString</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">token</span> <span class="o">*</span><span class="nx">jwt</span><span class="p">.</span><span class="nx">Token</span><span class="p">)</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;method&#34;</span><span class="p">,</span> <span class="nx">token</span><span class="p">.</span><span class="nx">Method</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">token</span><span class="p">.</span><span class="nx">Method</span><span class="p">.(</span><span class="o">*</span><span class="nx">jwt</span><span class="p">.</span><span class="nx">SigningMethodHMAC</span><span class="p">);</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;unexpected signing method: %v&#34;</span><span class="p">,</span> <span class="nx">token</span><span class="p">.</span><span class="nx">Header</span><span class="p">[</span><span class="s">&#34;alg&#34;</span><span class="p">])</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;asjdklqwejkqjkl&#34;</span><span class="p">),</span> <span class="kc">nil</span>
+    <span class="p">})</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;err&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">err</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">token</span><span class="p">,</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">彬Goh</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-10-19
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81/">用户认证</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/blog_unix_io/">
+            <span class="next-text nav-default">「csapp」Unix系统级IO</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="http://www.binfromfd.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme -
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+    <span class="division">|</span>
+    <span class="theme-info">
+         <a class="theme-link" href="http://www.beian.gov.cn">沪ICP备20004025-1号</a>
+    </span>
+
+    
+
+  <span class="copyright-year">
+    &copy; 
+    2020<span class="heart"><i class="iconfont icon-heart"></i></span><span>彬Goh</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

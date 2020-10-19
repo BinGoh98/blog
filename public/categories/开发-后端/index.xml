@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>开发-后端 on 「彬Goh」的个人博客</title>
+    <link>http://www.binfromfd.cn/categories/%E5%BC%80%E5%8F%91-%E5%90%8E%E7%AB%AF/</link>
+    <description>Recent content in 开发-后端 on 「彬Goh」的个人博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 19 Oct 2020 14:44:49 +0800</lastBuildDate><atom:link href="http://www.binfromfd.cn/categories/%E5%BC%80%E5%8F%91-%E5%90%8E%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>从个人博客搭建谈用户认证</title>
+      <link>http://www.binfromfd.cn/post/blog_auth/</link>
+      <pubDate>Mon, 19 Oct 2020 14:44:49 +0800</pubDate>
+      
+      <guid>http://www.binfromfd.cn/post/blog_auth/</guid>
+      <description>&lt;p&gt;假设我们现在需要搭建一个个人博客，除了展示给访问者的页面之外，还有一个后台管理系统。管理者通过用户名密码登陆，然后在后台管理博文、评论、标签等。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
