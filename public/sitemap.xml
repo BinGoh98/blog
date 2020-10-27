@@ -3,28 +3,49 @@
   
   <url>
     <loc>http://www.binfromfd.cn/categories/</loc>
-    <lastmod>2020-10-19T14:44:49+08:00</lastmod>
+    <lastmod>2020-10-27T14:19:27+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://www.binfromfd.cn/post/</loc>
-    <lastmod>2020-10-19T14:44:49+08:00</lastmod>
+    <lastmod>2020-10-27T14:19:27+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://www.binfromfd.cn/tags/</loc>
-    <lastmod>2020-10-19T14:44:49+08:00</lastmod>
+    <lastmod>2020-10-27T14:19:27+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://www.binfromfd.cn/</loc>
-    <lastmod>2020-10-19T14:44:49+08:00</lastmod>
+    <lastmod>2020-10-27T14:19:27+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.binfromfd.cn/post/blog_salary/</loc>
+    <lastmod>2020-10-27T14:19:27+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.binfromfd.cn/categories/%E7%A4%BE%E4%BC%9A/</loc>
+    <lastmod>2020-10-27T14:19:27+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.binfromfd.cn/tags/%E8%96%AA%E8%B5%84%E6%9E%84%E6%88%90/</loc>
+    <lastmod>2020-10-27T14:19:27+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

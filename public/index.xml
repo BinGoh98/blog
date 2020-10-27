@@ -6,7 +6,16 @@
     <description>Recent content on 「彬Goh」的个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 19 Oct 2020 14:44:49 +0800</lastBuildDate><atom:link href="http://www.binfromfd.cn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 27 Oct 2020 14:19:27 +0800</lastBuildDate><atom:link href="http://www.binfromfd.cn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>工作前必须要知道的薪资构成</title>
+      <link>http://www.binfromfd.cn/post/blog_salary/</link>
+      <pubDate>Tue, 27 Oct 2020 14:19:27 +0800</pubDate>
+      
+      <guid>http://www.binfromfd.cn/post/blog_salary/</guid>
+      <description>薪资 一般薪资结构包括 五险一金 每个月的工资构成（基本工资+绩效+餐补+交通补等等） 12个月的基本薪资+季度奖金+年终奖等等 涨薪机制（一年有多少</description>
+    </item>
+    
     <item>
       <title>从个人博客搭建谈用户认证</title>
       <link>http://www.binfromfd.cn/post/blog_auth/</link>
