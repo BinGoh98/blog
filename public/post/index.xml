@@ -6,7 +6,16 @@
     <description>Recent content in Posts on 「彬Goh」的个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 27 Oct 2020 14:19:27 +0800</lastBuildDate><atom:link href="http://www.binfromfd.cn/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 10 Nov 2020 17:01:34 +0800</lastBuildDate><atom:link href="http://www.binfromfd.cn/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>谈一谈TCP连接</title>
+      <link>http://www.binfromfd.cn/post/blog_tcp_connection/</link>
+      <pubDate>Tue, 10 Nov 2020 17:01:34 +0800</pubDate>
+      
+      <guid>http://www.binfromfd.cn/post/blog_tcp_connection/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>工作前必须要知道的薪资构成</title>
       <link>http://www.binfromfd.cn/post/blog_salary/</link>
