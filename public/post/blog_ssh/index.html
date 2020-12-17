@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>SSH与Pycharm免密远程登录服务器 - 「彬Goh」的个人博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="彬Goh" /><meta name="description" content="SSH与Pycharm免密远程登录服务器" /><meta name="keywords" content="ssh免密登录, pycharm, 远程登录服务器" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.75.1 with theme even" />
+
+
+<link rel="canonical" href="http://www.binfromfd.cn/post/blog_ssh/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f8e630b43e969857a189f7cc4d74b67032c29495708687d56ce9e8605c6bca1d.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="SSH与Pycharm免密远程登录服务器" />
+<meta property="og:description" content="SSH与Pycharm免密远程登录服务器" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.binfromfd.cn/post/blog_ssh/" />
+<meta property="article:published_time" content="2020-12-17T20:46:34+08:00" />
+<meta property="article:modified_time" content="2020-12-17T20:46:34+08:00" />
+<meta itemprop="name" content="SSH与Pycharm免密远程登录服务器">
+<meta itemprop="description" content="SSH与Pycharm免密远程登录服务器">
+<meta itemprop="datePublished" content="2020-12-17T20:46:34+08:00" />
+<meta itemprop="dateModified" content="2020-12-17T20:46:34+08:00" />
+<meta itemprop="wordCount" content="1107">
+
+
+
+<meta itemprop="keywords" content="软件安装," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SSH与Pycharm免密远程登录服务器"/>
+<meta name="twitter:description" content="SSH与Pycharm免密远程登录服务器"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">「彬Goh」的个人博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">「彬Goh」的个人博客</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">SSH与Pycharm免密远程登录服务器</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-12-17 </span>
+        <div class="post-category">
+            <a href="/categories/%E8%BD%AF%E4%BB%B6%E8%BF%90%E7%BB%B4/"> 软件运维 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#ssh免密登录">SSH免密登录</a>
+          <ul>
+            <li><a href="#原理">原理</a></li>
+            <li><a href="#步骤">步骤</a></li>
+          </ul>
+        </li>
+        <li><a href="#pycharm-远程连接服务器">Pycharm 远程连接服务器</a>
+          <ul>
+            <li><a href="#连接服务器">连接服务器</a></li>
+            <li><a href="#python解释器">python解释器</a></li>
+          </ul>
+        </li>
+        <li><a href="#参考">参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>本文主要解决两个问题</p>
+<ol>
+<li>免密 ssh 登录远程服务器</li>
+<li>pycharm 连接服务器调试</li>
+</ol>
+<h2 id="ssh免密登录">SSH免密登录</h2>
+<h3 id="原理">原理</h3>
+<p>使用了非对称加密：私钥放在自己服务器上，需要好好保存；公钥可以发给别人。流程如下所示：
+<img src="https://tva1.sinaimg.cn/large/0081Kckwly1glr1gnta9qj30l40b8mxy.jpg" alt="">
+所以想要免密连接，最重要的就是两步：</p>
+<ol>
+<li>本地生成一对密钥</li>
+<li>将公钥放入远程服务器的<code>authorized_keys</code>中</li>
+</ol>
+<h3 id="步骤">步骤</h3>
+<h4 id="1生成一对密钥">1、生成一对密钥</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> ~/.ssh <span class="c1"># 进入 .ssh 文件夹中。如果没有这个文件夹则创建它。</span>
+ssh-keygen -t rsa -C <span class="s2">&#34;your_email@example.com&#34;</span> <span class="c1"># 之后弹出的直接按回车就行。</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>ssh-keygen</code>命令重要选项如下：</p>
+<table>
+<thead>
+<tr>
+<th>ssh-keygen命令选项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-b</td>
+<td>指定要创建的密钥中的位数。 最小位长度为768位，默认长度为2048位。</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>指定要创建的密钥类型。</td>
+</tr>
+<tr>
+<td>-C</td>
+<td>提供新注释。</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>密钥文件名，默认 id_rsa 和 id_rsa.pub</td>
+</tr>
+</tbody>
+</table>
+<p>可以看到多了两个文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">id_rsa  <span class="c1"># 私钥</span>
+id_rsa.pub <span class="c1"># 公钥</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2将公钥放到服务器上">2、将公钥放到服务器上</h4>
+<p>可以使用<code>scp</code>命令来做这件事情。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">scp -P <span class="m">20002</span> ~/.ssh/id_rsa.pub root@10x.xxx.xxx:~/.ssh/id_rsa.pub.slave1
+</code></pre></td></tr></table>
+</div>
+</div><p><code>-P</code> 指定对方服务器端口。</p>
+<p><code>id_rsa.pub.slave1</code>表示将文件传输过去并且重命名（防止覆盖掉对方服务器自己的公钥）。</p>
+<p>此时还是需要你输入密码的。</p>
+<h4 id="3将公钥添加进权限列表">3、将公钥添加进权限列表</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">cat id_rsa.pub.slave1 &gt;&gt; authorized_keys
+</code></pre></td></tr></table>
+</div>
+</div><p>直接追加写到<code>authorized_keys</code>文件后面即可。如果没有这么文件，直接自己创建。</p>
+<h4 id="4指定host">4、指定Host</h4>
+<p>有时候记住对方服务器域名也非常麻烦，所以可以用别名去登录。</p>
+<p>在自己的<code>~/.ssh</code>下面创建名为<code>config</code>的文件，并在其中写入如下东西：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">Host tencent <span class="c1"># 别名</span>
+    HostName 10x.xxx.xxx.xxx <span class="c1"># 对方服务器域名</span>
+    Port <span class="m">22000</span> <span class="c1"># 连接的端口号</span>
+    User root <span class="c1"># 用户名称</span>
+    IdentityFile ~/.ssh/id_rsa <span class="c1"># 密钥的位置</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>之后在自己的电脑上使用以下命令就可以直接登录啦！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ssh tencent
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="5一些问题">5、一些问题</h4>
+<p>如果发现不能成功登陆的话，请修改<code>authorized_keys</code>的权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 查看权限</span>
+$ ls -l authorized_keys
+<span class="c1"># 修改权限</span>
+$ chmod <span class="m">600</span> authorized_keys
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="pycharm-远程连接服务器">Pycharm 远程连接服务器</h2>
+<h3 id="连接服务器">连接服务器</h3>
+<h4 id="1添加一个server名字随便取">1、添加一个Server，名字随便取</h4>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1glr58z3hf0j316y0u0jw0.jpg" alt=""></p>
+<h4 id="2连接服务器">2、连接服务器</h4>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1glr59p398yj31900nm75o.jpg" alt="image-20201217190620808"></p>
+<p>点击箭头所指的地方，可以输入对方服务器的域名、端口、密码。（也可以使用密钥方式登录）</p>
+<p><code>Root path</code> 指的是远程服务器的那一个目录作为你这里看到的<code>root</code></p>
+<h4 id="3映射">3、映射</h4>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1glr5a7wk4dj319m0h8mza.jpg" alt="image-20201217190847973"></p>
+<p>将服务器的某个文件映射到本地的文件夹下。设置完成后点<code>OK</code>即可。</p>
+<h4 id="4文件传输">4、文件传输</h4>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1glr5ahtuttj31010u0n6x.jpg" alt="image-20201217191103278"></p>
+<p>在该项目的任何一个文件上右键可以看到<code>Deployment</code>，选择对应操作即可实现同步。</p>
+<h3 id="python解释器">python解释器</h3>
+<p>解释器也就是用哪个<code>python</code>来运行代码。包括版本号和安装的一些依赖等。</p>
+<h4 id="1添加解释器">1、添加解释器</h4>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1glr5aykj5pj31m00qiaer.jpg" alt="image-20201217201236772"></p>
+<p>点击右侧的齿轮，然后点击<code>Add</code>。使用<code>SSH Interpreter</code>。</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1glr5azfij7j319l0u00wi.jpg" alt="image-20201217203003470"></p>
+<p>这里重新设置<code>configuration</code></p>
+<blockquote>
+<p>直接复用很容易出错。</p>
+</blockquote>
+<h4 id="2设置解释器映射">2、设置解释器映射</h4>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1glr5bbod8bj31ao0te76t.jpg" alt="image-20201217203142710"></p>
+<p><code>Interpreter</code> 是服务器<code>python</code>的安装路径。<code>Sync folers</code>是需要同步的目录。就是本机项目目录和服务器项目目录。</p>
+<p>设置完成之后，就可以直接在本机连接服务器跑了。本机的修改也会实时同步到服务器上。</p>
+<h2 id="参考">参考</h2>
+<p><a href="https://blog.csdn.net/qq_26907251/article/details/78804367">SSH免密登录原理及实现</a></p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">彬Goh</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-12-17
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/">软件安装</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/blog_tcp_connection/">
+            <span class="next-text nav-default">谈一谈TCP连接</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="http://www.binfromfd.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme -
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+    <span class="division">|</span>
+    <span class="theme-info">
+         <a class="theme-link" href="http://www.beian.gov.cn">沪ICP备20004025-1号</a>
+    </span>
+
+    
+
+  <span class="copyright-year">
+    &copy; 
+    2020<span class="heart"><i class="iconfont icon-heart"></i></span><span>彬Goh</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
