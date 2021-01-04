@@ -7,23 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Thu, 17 Dec 2020 20:46:34 +0800</lastBuildDate><atom:link href="http://www.binfromfd.cn/index.xml" rel="self" type="application/rss+xml" />
-
-
-      <item>
-          <title>露露考研加油</title>
-          <link>http://www.binfromfd.cn/post/for_ll/</link>
-          <pubDate>Thu, 24 Dec 2020 21:10:34 +0800</pubDate>
-
-          <guid>http://www.binfromfd.cn/post/for_ll/</guid>
-          <description>送给这周末考研的朋友</description>
-      </item>
-
-
-      <item>
+    <item>
       <title>SSH与Pycharm免密远程登录服务器</title>
       <link>http://www.binfromfd.cn/post/blog_ssh/</link>
       <pubDate>Thu, 17 Dec 2020 20:46:34 +0800</pubDate>
-
+      
       <guid>http://www.binfromfd.cn/post/blog_ssh/</guid>
       <description>&lt;p&gt;本文主要解决两个问题&lt;/p&gt;
 &lt;ol&gt;

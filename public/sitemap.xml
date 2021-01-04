@@ -14,13 +14,6 @@
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
-
-  <url>
-    <loc>http://www.binfromfd.cn/post/for_ll/</loc>
-    <lastmod>2020-12-24T21:10:34+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
   
   <url>
     <loc>http://www.binfromfd.cn/post/blog_ssh/</loc>
